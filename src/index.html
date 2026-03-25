@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PsicoYA! – Calendario de Citas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ─── NAV ─────────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-logo">PsicoYA!</div>
+    <div class="nav-links">
+      <a class="nav-link active" href="index.html">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Agenda
+      </a>
+      <a class="nav-link" href="horarios.html">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Horarios
+      </a>
+      <a class="nav-link" href="pacientes.html">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Pacientes
+      </a>
+    </div>
+    <button class="nav-bell" id="bellBtn" onclick="toggleNotifications()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <span class="nav-bell-dot" id="bellDot"></span>
+    </button>
+  </nav>
+
+  <!-- ─── NOTIFICATIONS PANEL ───────────────────────────────── -->
+  <div class="notif-panel" id="notifPanel">
+    <div class="notif-header">
+      <span class="notif-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        Notificaciones
+      </span>
+      <button class="notif-close" onclick="toggleNotifications()">Cerrar</button>
+    </div>
+    <div class="notif-body" id="notifBody">
+      <p class="notif-empty">No hay notificaciones</p>
+    </div>
+  </div>
+  <div class="notif-backdrop" id="notifBackdrop" onclick="toggleNotifications()"></div>
+
+  <!-- ─── MAIN ─────────────────────────────────────────────── -->
+  <div class="main">
+    <div class="cal-card">
+      <div class="cal-header">
+        <span class="cal-title">Calendario de Citas</span>
+        <div class="cal-nav">
+          <button class="btn-today" onclick="goToday()">Hoy</button>
+          <button class="btn-arrow" onclick="navigate(-1)">&#8249;</button>
+          <span class="cal-period" id="periodLabel"></span>
+          <button class="btn-arrow" onclick="navigate(1)">&#8250;</button>
+          <div class="view-toggle">
+            <button class="btn-view" id="btnSemana" onclick="setView('semana')">Semana</button>
+            <button class="btn-view" id="btnDia"    onclick="setView('dia')">Día</button>
+            <button class="btn-view" id="btnMes"    onclick="setView('mes')">Mes</button>
+          </div>
+        </div>
+      </div>
+      <div id="calBody"></div>
+    </div>
+  </div>
+
+  <!-- ─── MODAL: NUEVA CITA ─────────────────────────────────── -->
+  <div class="modal-overlay" id="modalNueva">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Nueva Cita</h2>
+        <button class="modal-close" onclick="closeModalNueva()">&#x2715;</button>
+      </div>
+      <input type="hidden" id="nPacienteId">
+      <div class="form-group" style="position:relative">
+        <label>Paciente</label>
+        <input type="text" id="nPaciente" placeholder="Buscar paciente…" autocomplete="off"
+          oninput="filterPatients('n')" onfocus="filterPatients('n')">
+        <div class="patient-dropdown" id="nDropdown"></div>
+      </div>
+      <div class="form-group">
+        <label>C.I. del Paciente</label>
+        <input type="text" id="nCI" placeholder="Carnet de identidad" readonly>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="nFecha">
+        </div>
+        <div class="form-group">
+          <label>Hora</label>
+          <input type="time" id="nHora">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Duración (minutos)</label>
+        <input type="number" id="nDuracion" min="15" step="15" value="60">
+      </div>
+      <div class="form-group">
+        <label>Notas (opcional)</label>
+        <textarea id="nNotas"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel-modal" onclick="closeModalNueva()">Cancelar</button>
+        <button class="btn-save" onclick="saveNuevaCita()">Crear Cita</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── MODAL: DETALLE CITA ──────────────────────────────── -->
+  <div class="modal-overlay" id="modalDetalle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Detalle de Cita</h2>
+        <button class="modal-close" onclick="closeModalDetalle()">&#x2715;</button>
+      </div>
+      <input type="hidden" id="dPacienteId">
+      <div class="form-group" style="position:relative">
+        <label>Paciente</label>
+        <input type="text" id="dPaciente" placeholder="Buscar paciente…" autocomplete="off"
+          oninput="filterPatients('d')" onfocus="filterPatients('d')">
+        <div class="patient-dropdown" id="dDropdown"></div>
+      </div>
+      <div class="form-group">
+        <label>C.I. del Paciente</label>
+        <input type="text" id="dCI" placeholder="Carnet de identidad" readonly>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="dFecha">
+        </div>
+        <div class="form-group">
+          <label>Hora</label>
+          <input type="time" id="dHora">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Duración (minutos)</label>
+        <input type="number" id="dDuracion" min="15" step="15">
+      </div>
+      <div class="form-group">
+        <label>Notas (opcional)</label>
+        <textarea id="dNotas"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel-appt" onclick="cancelarCita()">Cancelar cita</button>
+        <button class="btn-save" onclick="guardarDetalle()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TOAST ────────────────────────────────────────────── -->
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const _url = 'https://badevyjmzybvordmsvbn.supabase.co';
+    const _key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZGV2eWptenlidm9yZG1zdmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTM0MTYsImV4cCI6MjA4OTA2OTQxNn0.M2T-CuNbZwXq0zYZTa_2ykvvjTMbdcaoFUz_CAx_L1U';
+    window.supabase = createClient(_url, _key);
+
+    // Cargar app.js y llamar init cuando esté listo
+    const s = document.createElement('script');
+    s.src = 'app.js';
+    s.onload = () => {
+      // DOMContentLoaded ya pasó, llamamos init directamente
+      if (typeof initApp === 'function') initApp();
+    };
+    document.body.appendChild(s);
+  </script>
+</body>
+</html>
