@@ -38,6 +38,8 @@ PsicoYA! es una pagina web diseñada para profesionales de la psicología que bu
 │   ├── Historias_Usuario.pdf
 │   └── Arquitectura.png
 └── README.md
+```
+---
 
 ## Links importantes
 Figma. https://www.figma.com/design/mpxDFEABPCfMSvji33Nri4/PsicoYa-?node-id=0-1&t=Lgs8jAlHg1cBPlv5-1
