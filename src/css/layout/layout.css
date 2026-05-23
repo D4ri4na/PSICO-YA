@@ -1,0 +1,29 @@
+.main {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: 18px 24px;
+  box-shadow: 0 4px 16px rgba(100, 0, 180, 0.05);
+  margin-bottom: 20px;
+}
+
+.header-block__title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--color-text-dark);
+}
+
+.header-block__subtitle {
+  font-size: 0.85rem;
+  color: var(--color-purple-mid);
+  font-weight: 600;
+  margin-top: 2px;
+}

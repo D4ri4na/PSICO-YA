@@ -1,0 +1,18 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-purple-bg);
+  color: var(--color-text-dark);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+input, button, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}

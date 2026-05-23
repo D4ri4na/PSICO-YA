@@ -1,0 +1,21 @@
+:root {
+  /* Paleta de Colores (Identidad PsicoYA!) */
+  --color-purple-dark:   #4A0080;
+  --color-purple-main:   #7B2FBE;
+  --color-purple-mid:    #9B59D0;
+  --color-purple-light:  #C39BE0;
+  --color-purple-ghost:  #E8D5F5;
+  --color-purple-hover:  #D4A8F0;
+  --color-purple-bg:     #EDE3F7;
+  --color-purple-nav:    #6B1FAA;
+  --color-white:         #FFFFFF;
+  --color-text-dark:     #3A0070;
+  --color-text-mid:      #6B1FAA;
+  --color-gray-line:     #E0CCF0;
+  --color-danger:        #e53e3e;
+  --color-danger-bg:     #fff5f5;
+  
+  /* Configuraciones de Layout */
+  --font-family: 'Nunito', sans-serif;
+  --cell-height: 60px;
+}

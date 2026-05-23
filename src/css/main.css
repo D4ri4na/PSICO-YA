@@ -1,0 +1,15 @@
+/* ==========================================================================
+   PsicoYA! Central Stylesheet Bundle (Native CSS Modular Architecture)
+   ========================================================================== */
+
+@import './base/variables.css';
+@import './base/reset.css';
+@import './layout/layout.css';
+@import './components/nav.css';
+@import './components/btn.css';
+@import './components/modal.css';
+@import './components/toast.css';
+@import './components/table.css';
+@import './components/calendar.css';
+@import './components/schedule.css';
+@import './views/spa.css';

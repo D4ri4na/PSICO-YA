@@ -1,0 +1,52 @@
+.schedule-card {
+  background-color: var(--color-white);
+  border-radius: 16px;
+  padding: 10px 24px 24px;
+  box-shadow: 0 4px 16px rgba(100, 0, 180, 0.05);
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-gray-line);
+}
+
+.schedule-row:last-child {
+  border-bottom: none;
+}
+
+.schedule-row__day-info {
+  width: 120px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+}
+
+.schedule-row__times {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.schedule-row__input {
+  padding: 6px 10px;
+  border: 2px solid var(--color-gray-line);
+  border-radius: 8px;
+  font-weight: 700;
+  outline: none;
+}
+
+.schedule-row__input:focus {
+  border-color: var(--color-purple-main);
+}
+
+.schedule-row__input:disabled {
+  background-color: var(--color-purple-bg);
+  color: var(--color-purple-light);
+  cursor: not-allowed;
+}
+
+.schedule-row--disabled .schedule-row__day-info {
+  color: var(--color-purple-light);
+}

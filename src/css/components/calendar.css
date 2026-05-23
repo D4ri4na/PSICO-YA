@@ -1,0 +1,31 @@
+.calendar-widget {
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(100, 0, 180, 0.05);
+}
+
+.calendar-widget__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.calendar-widget__day-label {
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--color-purple-mid);
+  padding-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.calendar-widget__cell {
+  background-color: var(--color-purple-bg);
+  border-radius: 8px;
+  min-height: 90px;
+  padding: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
