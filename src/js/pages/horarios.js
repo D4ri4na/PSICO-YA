@@ -10,6 +10,28 @@ const CONFIG_DIAS = [
   { key: 'domingo', label: 'Domingo' }
 ];
 
+export function guardarHorarios() {
+  const outData = {};
+  let isValido = true;
+
+  CONFIG_DIAS.forEach(d => {
+    const enabled = document.getElementById(`check-${d.key}`)?.checked ?? false;
+    const desde = document.getElementById(`desde-${d.key}`)?.value || '08:00';
+    const hasta = document.getElementById(`hasta-${d.key}`)?.value || '17:00';
+
+    if (enabled && desde >= hasta) {
+      UI.showToast?.(`⚠️ En ${d.label}, el horario de inicio debe preceder al de cierre`);
+      isValido = false;
+    }
+    outData[d.key] = { enabled, desde, hasta };
+  });
+
+  if (!isValido) return;
+
+  localStorage.setItem('psicoya_horarios', JSON.stringify(outData));
+  UI.showToast?.('✅ Esquema operativo actualizado localmente');
+}
+
 export function initHorarios() {
   const container = document.getElementById('daysListContainer');
   const btnGuardar = document.getElementById('btnGuardarHorarios');
@@ -58,25 +80,7 @@ export function initHorarios() {
   }
 
   btnGuardar?.addEventListener('click', () => {
-    const outData = {};
-    let isValido = true;
-
-    CONFIG_DIAS.forEach(d => {
-      const enabled = document.getElementById(`check-${d.key}`).checked;
-      const desde = document.getElementById(`desde-${d.key}`).value;
-      const hasta = document.getElementById(`hasta-${d.key}`).value;
-
-      if (enabled && desde >= hasta) {
-        UI.showToast(`⚠️ En ${d.label}, el horario de inicio debe preceder al de cierre`);
-        isValido = false;
-      }
-      outData[d.key] = { enabled, desde, hasta };
-    });
-
-    if (!isValido) return;
-
-    localStorage.setItem('psicoya_horarios', JSON.stringify(outData));
-    UI.showToast('✅ Esquema operativo actualizado localmente');
+    guardarHorarios();
   });
 
   renderConfig();
