@@ -69,7 +69,7 @@ export async function loadPatients() {
   }
 }
 
-export function initApp() {
+export function initPacientes() {
   formState = {
     id: null,
     nombre: '',
