@@ -46,4 +46,13 @@ describe('Lógica de Negocio - Módulo Pacientes', () => {
 
     expect(mockSupabase.from().update).toHaveBeenCalled();
   });
+
+//EF
+test('HU-5 (Criterio 1): Eliminación lógica de un paciente', async () => {
+    const { confirmDelete } = await import('../pages/pacientes.js');
+    await confirmDelete(99);
+
+    expect(mockSupabase.from().update).toHaveBeenCalledWith({ eliminado: true });
+  });
+
 });
