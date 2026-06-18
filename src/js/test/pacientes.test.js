@@ -1,10 +1,16 @@
+const mockSupabaseQueryBuilder = {
+  insert: jest.fn().mockReturnThis(),
+  update: jest.fn().mockReturnThis(),
+  select: jest.fn().mockReturnThis(),
+  eq: jest.fn().mockReturnThis(),
+  single: jest.fn().mockReturnThis(),
+  order: jest.fn().mockReturnThis(),
+  then: jest.fn((resolve) => resolve({ data: [], error: null })) 
+};
+
 jest.mock('../config/supabase.js', () => ({
   supabase: {
-    insert: jest.fn().mockReturnThis(),
-    update: jest.fn().mockReturnThis(),
-    select: jest.fn().mockReturnThis(),
-    order: jest.fn().mockResolvedValue({ data: [], error: null }),
-    eq: jest.fn().mockResolvedValue({ error: null })
+    from: jest.fn(() => mockSupabaseQueryBuilder)
   }
 }));
 
@@ -28,7 +34,7 @@ describe('Lógica de Negocio - Módulo Pacientes', () => {
     
     await insertPatient({ nombre: 'Juan Perez' });
 
-    expect(mockSupabase.insert).toHaveBeenCalled();
+    expect(mockSupabase.from().insert).toHaveBeenCalled();
   });
 
   // 2
@@ -38,6 +44,6 @@ describe('Lógica de Negocio - Módulo Pacientes', () => {
     
     await updatePatient(1, { telefono: '77712345' });
 
-    expect(mockSupabase.update).toHaveBeenCalled();
+    expect(mockSupabase.from().update).toHaveBeenCalled();
   });
 });
