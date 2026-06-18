@@ -116,22 +116,17 @@ export function openDelete(id) {
 export async function confirmDelete(id) {
   try {
     const { error } = await supabase
-      .from('pacientes')
-      .delete()
+      .from('pacientes') 
+      .update({ eliminado: true })
       .eq('id', id);
     
     if (error) throw error;
-    UI.showToast('✅ Paciente eliminado correctamente');
-    await loadAndRenderPacientes();
     return true;
   } catch (error) {
-    console.error('Error deleting patient:', error);
-    UI.showToast('❌ Error al eliminar paciente');
     return false;
   }
 }
 
-// Funciones auxiliares para el HTML
 window.editarPaciente = async function(id) {
   const pacientes = await loadPatients();
   const paciente = pacientes.find(p => p.id === id);
