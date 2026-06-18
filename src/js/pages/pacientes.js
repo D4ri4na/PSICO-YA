@@ -116,13 +116,18 @@ export function openDelete(id) {
 export async function confirmDelete(id) {
   try {
     const { error } = await supabase
-      .from('pacientes') 
+      .from('pacientes')
       .update({ eliminado: true })
       .eq('id', id);
     
-    if (error) throw error;
+    if (error) {
+      console.warn(`Intento fallido al eliminar paciente ${id}:`, error.message);
+      throw error;
+    }
+    
     return true;
   } catch (error) {
+    console.error('Error crítico en confirmDelete:', error);
     return false;
   }
 }
