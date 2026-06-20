@@ -84,13 +84,15 @@ export function initHorarios() {
   renderConfig();
 }
 
+const isValidTimeRange = (start, end) => {
+  return start && end && start < end;
+};
+
 export async function saveSchedule(horaInicio, horaFin) {
-  if (horaInicio >= horaFin) {
+  if (!isValidTimeRange(horaInicio, horaFin)) {
     return { 
       success: false, 
       error: 'La hora de inicio debe ser menor a la hora de fin' 
     };
   }
-
-  return { success: true };
-}
+}  
