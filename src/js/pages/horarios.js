@@ -20,7 +20,7 @@ export function guardarHorarios() {
     const hasta = document.getElementById(`hasta-${d.key}`)?.value || '17:00';
 
     if (enabled && desde >= hasta) {
-      UI.showToast?.(`⚠️ En ${d.label}, el horario de inicio debe preceder al de cierre`);
+      UI.showToast?.(`X En ${d.label}, el horario de inicio debe preceder al de cierre`);
       isValido = false;
     }
     outData[d.key] = { enabled, desde, hasta };
@@ -29,7 +29,7 @@ export function guardarHorarios() {
   if (!isValido) return;
 
   localStorage.setItem('psicoya_horarios', JSON.stringify(outData));
-  UI.showToast?.('✅ Esquema operativo actualizado localmente');
+  UI.showToast?.(':) Esquema operativo actualizado localmente');
 }
 
 export function initHorarios() {
@@ -39,7 +39,6 @@ export function initHorarios() {
   function renderConfig() {
     if (!container) return;
     
-    // Obtener datos salvados o defaults rápidos
     const localData = JSON.parse(localStorage.getItem('psicoya_horarios')) || {};
 
     container.innerHTML = CONFIG_DIAS.map(d => {
@@ -61,7 +60,6 @@ export function initHorarios() {
       `;
     }).join('');
 
-    // Manejar lógica visual de deshabilitar inputs en vivo
     container.querySelectorAll('.day-toggle').forEach(checkbox => {
       checkbox.addEventListener('change', (e) => {
         const day = e.target.dataset.day;
@@ -84,4 +82,15 @@ export function initHorarios() {
   });
 
   renderConfig();
+}
+
+export async function saveSchedule(horaInicio, horaFin) {
+  if (horaInicio >= horaFin) {
+    return { 
+      success: false, 
+      error: 'La hora de inicio debe ser menor a la hora de fin' 
+    };
+  }
+
+  return { success: true };
 }
