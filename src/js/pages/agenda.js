@@ -31,16 +31,22 @@ export async function loadCitas() {
   }
 }
 
-export async function saveCita() {
-  const id = document.getElementById('cId')?.value;
-  const paciente_id = document.getElementById('cPacienteId')?.value;
-  const fecha = document.getElementById('cFecha')?.value;
-  const hora = document.getElementById('cHora')?.value;
-  const motivo = document.getElementById('cMotivo')?.value;
+export async function saveCita(testPacienteId = null, testFecha = null, testHora = null) {
+  const id = document.getElementById('cId')?.value || null;
+  const paciente_id = testPacienteId || document.getElementById('cPacienteId')?.value;
+  const fecha = testFecha || document.getElementById('cFecha')?.value;
+  const hora = testHora || document.getElementById('cHora')?.value;
+  const motivo = document.getElementById('cMotivo')?.value || null;
 
   if (!paciente_id || !fecha || !hora) {
-    UI.showToast('⚠️ Paciente, fecha y hora son requeridos');
-    return;
+    if (typeof UI !== 'undefined') UI.showToast('Paciente, fecha y hora son requeridos');
+    return { success: false, error: 'Faltan campos requeridos' };
+  }
+
+  const hoy = new Date().toISOString().split('T')[0];
+  if (fecha < hoy) {
+    if (typeof UI !== 'undefined') UI.showToast('X No se pueden agendar citas en fechas pasadas');
+    return { success: false, error: 'No se pueden agendar citas en fechas pasadas' };
   }
 
   const payload = { paciente_id, fecha, hora, motivo };
@@ -49,17 +55,23 @@ export async function saveCita() {
     if (id) {
       const { error } = await supabase.from('citas').update(payload).eq('id', id);
       if (error) throw error;
-      UI.showToast('✅ Cita actualizada correctamente');
+      if (typeof UI !== 'undefined') UI.showToast(':) Cita actualizada correctamente');
     } else {
       const { error } = await supabase.from('citas').insert([payload]);
       if (error) throw error;
-      UI.showToast('✅ Cita registrada correctamente');
+      if (typeof UI !== 'undefined') UI.showToast(':) Cita registrada correctamente');
     }
-    UI.closeModal('modalCita');
-    await renderCalendar();
+    
+    if (typeof UI !== 'undefined' && typeof renderCalendar === 'function') {
+      UI.closeModal('modalCita');
+      await renderCalendar();
+    }
+    
+    return { success: true };
   } catch (error) {
-    console.error(error);
-    UI.showToast('❌ Error al guardar la cita');
+    console.error('Error al guardar la cita:', error);
+    if (typeof UI !== 'undefined') UI.showToast('X Error al guardar la cita');
+    return { success: false, error: error.message };
   }
 }
 
