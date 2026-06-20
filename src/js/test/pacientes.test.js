@@ -65,3 +65,12 @@ test('HU-6: Rechazar citas en fechas pasadas', async () => {
     expect(result.success).toBe(false);
     expect(result.error).toBe('No se pueden agendar citas en fechas pasadas');
   });
+
+test('HU-7: Rechazar horario si hora inicio es >= hora fin', async () => {
+    const { saveSchedule } = await import('../pages/horarios.js');
+    
+    const result = await saveSchedule('18:00', '14:00');
+
+    expect(result.success).toBe(false);
+    expect(result.error).toBe('La hora de inicio debe ser menor a la hora de fin');
+  });  
