@@ -54,5 +54,14 @@ test('HU-5 (Criterio 1): Eliminación lógica de un paciente', async () => {
 
     expect(mockSupabase.from().update).toHaveBeenCalledWith({ eliminado: true });
   });
-
 });
+
+test('HU-6: Rechazar citas en fechas pasadas', async () => {
+    const { saveCita } = await import('../pages/agenda.js');
+    
+    const pastDate = '2020-01-01'; 
+    const result = await saveCita(1, pastDate, '10:00');
+
+    expect(result.success).toBe(false);
+    expect(result.error).toBe('No se pueden agendar citas en fechas pasadas');
+  });
