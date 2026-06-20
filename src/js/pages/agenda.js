@@ -31,6 +31,12 @@ export async function loadCitas() {
   }
 }
 
+const isFutureOrToday = (dateString) => {
+  if (!dateString) return false;
+  const today = new Date().toISOString().split('T')[0];
+  return dateString >= today;
+};
+
 export async function saveCita(testPacienteId = null, testFecha = null, testHora = null) {
   const id = document.getElementById('cId')?.value || null;
   const paciente_id = testPacienteId || document.getElementById('cPacienteId')?.value;
@@ -43,8 +49,8 @@ export async function saveCita(testPacienteId = null, testFecha = null, testHora
     return { success: false, error: 'Faltan campos requeridos' };
   }
 
-  const hoy = new Date().toISOString().split('T')[0];
-  if (fecha < hoy) {
+  if (!isFutureOrToday(fecha)) {
+    console.warn(`Intento de agenda rechazada por fecha en el pasado: ${fecha}`);
     if (typeof UI !== 'undefined') UI.showToast('X No se pueden agendar citas en fechas pasadas');
     return { success: false, error: 'No se pueden agendar citas en fechas pasadas' };
   }
