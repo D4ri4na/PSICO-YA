@@ -28,4 +28,26 @@
   padding: 6px;
   font-weight: 700;
   font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
+
+.calendar-widget__event {
+  background: linear-gradient(135deg, var(--color-purple-mid), var(--color-purple-dark));
+  color: var(--color-white);
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-widget__event:hover {
+  transform: translateY(-2px);
+}

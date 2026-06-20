@@ -108,6 +108,35 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="modalCita">
+    <div class="modal-box">
+      <h2 class="modal-box__title" id="modalCitaTitle">Nueva Cita</h2>
+      <input type="hidden" id="cId">
+      <div class="modal-box__form-group">
+        <label class="modal-box__label">Paciente</label>
+        <select class="modal-box__input" id="cPacienteId">
+          <option value="">Seleccione un paciente</option>
+        </select>
+      </div>
+      <div class="modal-box__form-group">
+        <label class="modal-box__label">Fecha</label>
+        <input class="modal-box__input" type="date" id="cFecha">
+      </div>
+      <div class="modal-box__form-group">
+        <label class="modal-box__label">Hora</label>
+        <input class="modal-box__input" type="time" id="cHora">
+      </div>
+      <div class="modal-box__form-group">
+        <label class="modal-box__label">Motivo / Notas</label>
+        <input class="modal-box__input" type="text" id="cMotivo" placeholder="Ej. Terapia inicial">
+      </div>
+      <div class="modal-box__actions">
+        <button class="btn btn--outline modal-box__btn" id="btnCancelarCita">Cancelar</button>
+        <button class="btn btn--primary modal-box__btn" id="btnGuardarCita">Guardar</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script type="module" src="./js/app.js"></script>
