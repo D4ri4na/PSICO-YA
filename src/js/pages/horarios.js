@@ -95,4 +95,4 @@ export async function saveSchedule(horaInicio, horaFin) {
       error: 'La hora de inicio debe ser menor a la hora de fin' 
     };
   }
-}  
+}
